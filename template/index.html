@@ -1,0 +1,152 @@
+{% extends "basemain.html" %}
+{% block body %}
+        <!-- Start Trending Product Area -->
+        <section class="trending-product section" style="margin-top: 12px;">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section-title">
+                            <h2>Trending Product</h2>
+                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have
+                                suffered alteration in some form.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        {% for posts in post %}
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <!-- Start Single Product -->
+                            <div class="single-product">
+                                <div class="product-image">
+                                    <img src="/{{posts.image}}" alt="#" width="100%" height="250px">
+                                    <div class="button">
+                                        <a href="{% url 'addtocart' posts.id %}" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="product-info">
+                                    <span class="category"><strong>Category:</strong>{{posts.category}}</span>
+                                    <h4 class="title">
+                                        <a href="{% url 'viewproduct' posts.id %}"><strong>Name:</strong>{{posts.name}}</a>
+                                    </h4>
+                                    <div class="price">
+                                        <span><strong>Price:</strong>₹{{posts.price}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Single Product -->
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Start Shipping Info -->
+        <section class="shipping-info">
+            <div class="container">
+                <ul>
+                    <!-- Free Shipping -->
+                    <li>
+                        <div class="media-icon">
+                            <i class="fa fa-truck"></i>
+                        </div>
+                        <div class="media-body">
+                            <h5>Free Shipping</h5>
+                            <span>On order over $99</span>
+                        </div>
+                    </li>
+                    <!-- Money Return -->
+                    <li>
+                        <div class="media-icon">
+                            <i class="fa fa-commenting-o"></i>
+                        </div>
+                        <div class="media-body">
+                            <h5>24/7 Support.</h5>
+                            <span>Live Chat Or Call.</span>
+                        </div>
+                    </li>
+                    <!-- Support 24/7 -->
+                    <li>
+                        <div class="media-icon">
+                            <i class="fa fa-credit-card"></i>
+                        </div>
+                        <div class="media-body">
+                            <h5>Online Payment.</h5>
+                            <span>Secure Payment Services.</span>
+                        </div>
+                    </li>
+                    <!-- Safe Payment -->
+                    <li>
+                        <div class="media-icon">
+                            <i class="fa fa-refresh"></i>
+                        </div>
+                        <div class="media-body">
+                            <h5>Easy Return.</h5>
+                            <span>Hassle Free Shopping.</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <!-- End Shipping Info -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript">
+            //========= Hero Slider 
+            tns({
+                container: '.hero-slider',
+                slideBy: 'page',
+                autoplay: true,
+                autoplayButtonOutput: false,
+                mouseDrag: true,
+                gutter: 0,
+                items: 1,
+                nav: false,
+                controls: true,
+                controlsText: ['<i class="lni lni-chevron-left"></i>', '<i class="lni lni-chevron-right"></i>'],
+            });
+
+            //======== Brand Slider
+            tns({
+                container: '.brands-logo-carousel',
+                autoplay: true,
+                autoplayButtonOutput: false,
+                mouseDrag: true,
+                gutter: 15,
+                nav: false,
+                controls: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                    },
+                    540: {
+                        items: 3,
+                    },
+                    768: {
+                        items: 5,
+                    },
+                    992: {
+                        items: 6,
+                    }
+                }
+            });
+            $(document).ready(function(){
+                $(".add-to-cart").click(function(){
+                    var productId = $(this).data("id");
+                    
+                    $.ajax({
+                        url: "/add-to-cart/" + productId + "/",
+                        type: "POST",
+                        data: { "csrfmiddlewaretoken": "{{ csrf_token }}" },
+                        success: function(response){
+                            alert("Item added to cart!");
+                        },
+                        error: function(response){
+                            alert("Error adding to cart!");
+                        }
+                    });
+                });
+            });
+        </script>
+{% endblock body %}

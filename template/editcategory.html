@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block body %}
+    <style>
+        /* Fade-in animation for form */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-container {
+            animation: fadeIn 0.5s ease-out;
+            max-width: 900px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Button hover effect */
+        .btn {
+            transition: transform 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+
+    <div class="container" style="height:500px; margin-top: 100px;">
+        <div class="form-container mt-5 mx-auto">
+            <h2 class="text-center mb-4">Add New Category</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="categoryName" class="form-label">Category Name</label>
+                    <input type="text" class="form-control" id="categoryName" value="{{c.name}}" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="categoryDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="categoryDescription" name="detail"  rows="3" required>{{c.detail}}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Add Category</button>
+                <a href="{% url 'showcategory' %}" class="btn btn-secondary w-100 mt-2">Back to Categories</a>
+            </form>
+        </div>
+    </div>
+{% endblock body %}
+

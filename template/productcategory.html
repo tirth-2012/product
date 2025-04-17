@@ -1,0 +1,86 @@
+{% extends "basemain.html" %}
+{% block body %}
+        <!-- Start Trending Product Area -->
+        <section class="trending-product section" style="margin-top: 12px;">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        {% for posts in post %}
+                        <div class="section-title">
+                            <h2>{{posts.category}}</h2> 
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        {% for posts in post %}
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <!-- Start Single Product -->
+                            <div class="single-product">
+                                <div class="product-image">
+                                    <img src="/{{posts.image}}" alt="#" width="100%" height="250px">
+                                    <div class="button">
+                                        <a href="{% url 'addtocart' posts.id %}" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="product-info">
+                                    <span class="category"><strong>Category:</strong>{{posts.category}}</span>
+                                    <h4 class="title">
+                                        <a href="{% url 'viewproduct' posts.id %}"><strong>Name:</strong>{{posts.name}}</a>
+                                    </h4>
+                                    <div class="price">
+                                        <span><strong>Price:</strong>₹{{posts.price}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Single Product -->
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- End Shipping Info -->
+        <script type="text/javascript">
+            //========= Hero Slider 
+            tns({
+                container: '.hero-slider',
+                slideBy: 'page',
+                autoplay: true,
+                autoplayButtonOutput: false,
+                mouseDrag: true,
+                gutter: 0,
+                items: 1,
+                nav: false,
+                controls: true,
+                controlsText: ['<i class="lni lni-chevron-left"></i>', '<i class="lni lni-chevron-right"></i>'],
+            });
+
+            //======== Brand Slider
+            tns({
+                container: '.brands-logo-carousel',
+                autoplay: true,
+                autoplayButtonOutput: false,
+                mouseDrag: true,
+                gutter: 15,
+                nav: false,
+                controls: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                    },
+                    540: {
+                        items: 3,
+                    },
+                    768: {
+                        items: 5,
+                    },
+                    992: {
+                        items: 6,
+                    }
+                }
+            });
+        </script>
+{% endblock body %}
